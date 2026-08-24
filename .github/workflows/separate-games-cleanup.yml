@@ -1,0 +1,57 @@
+name: Finish separating ONE MORE games
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Remove migrated duplicates and update index
+        run: |
+          set -euxo pipefail
+          rm -rf games/one-more-second games/one-more-floor games/one-more-door
+          rm -f .github/workflows/one-more-second-android.yml
+          rm -f .github/workflows/one-more-floor-android.yml
+          rm -f .github/workflows/one-more-door-android.yml
+          rm -f .github/one-more-floor-debug.keystore.b64
+          rm -f .github/one-more-door-debug.keystore.b64
+          cat > README.md <<'EOF'
+          # ONE MORE
+
+          **ONE MORE** is the original one-tap precision runner and the first game in the ONE MORE series.
+
+          ## This repository
+
+          This repository now contains only the original **ONE MORE** game and its Android build/release workflow.
+
+          ## ONE MORE series
+
+          Each additional game has its own dedicated repository:
+
+          - [ONE MORE SECOND](https://github.com/simplebusiness26/OneMore-Second)
+          - [ONE MORE FLOOR](https://github.com/simplebusiness26/OneMore-Floor)
+          - [ONE MORE DOOR](https://github.com/simplebusiness26/OneMore-Door)
+
+          Each repository owns its own source code, Android app identity, GitHub Actions APK workflow, signing material, and Releases page.
+
+          ## Series rules
+
+          1. The core mechanic should be understandable immediately.
+          2. Controls stay minimal and mobile-first.
+          3. Failure is fast and restart is faster.
+          4. Scores/progression are easy to understand and chase.
+          5. Difficulty rewards mastery rather than grinding.
+          6. The final temptation is always **ONE MORE?**
+          EOF
+          rm -f .github/workflows/separate-games-cleanup.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Move ONE MORE series games to dedicated repositories"
+          git push
