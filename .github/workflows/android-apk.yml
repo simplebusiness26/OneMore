@@ -8,6 +8,7 @@ on:
       - 'index.html'
       - 'styles.css'
       - 'game.js'
+      - 'gameplay-patch.js'
       - 'manifest.webmanifest'
       - 'sw.js'
       - 'icons/**'
@@ -64,11 +65,12 @@ jobs:
         run: |
           rm -rf dist android
           mkdir -p dist/icons
-          cp index.html styles.css game.js manifest.webmanifest sw.js dist/
+          cp index.html styles.css game.js gameplay-patch.js manifest.webmanifest sw.js dist/
           cp icons/icon.svg dist/icons/
           test -f dist/index.html
           test -f dist/styles.css
           test -f dist/game.js
+          test -f dist/gameplay-patch.js
           test -f dist/manifest.webmanifest
           test -f dist/sw.js
           test -f dist/icons/icon.svg
