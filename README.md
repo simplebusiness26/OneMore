@@ -1,41 +1,47 @@
 # ONE MORE
 
-A free, original one-tap auto-run platform game built for mobile first.
+**ONE MORE** is a family of fast, replayable arcade games built around one idea: when the run ends, you immediately want **one more**.
 
-## Current game
+## Games
 
-- One-tap / space-to-jump controls
+### ONE MORE — Precision Runner
+The original one-tap auto-run platform game that started the collection.
+
 - Automatic forward movement
-- Instant death and restart loop
-- Six original levels with increasing speed and difficulty
-- Spikes, double spikes and block obstacles
-- Attempt counter and per-level best progress
-- Unlockable level progression
-- Practice mode with automatic checkpoints
-- Gems awarded on completion
-- Pause/resume/restart flow
-- Local save data
-- Lightweight generated sound effects
-- Responsive neon mobile UI
-- Offline PWA support
-- Original SVG app icon
-- Capacitor Android packaging
-- GitHub Actions APK build
+- One-tap jump controls
+- Six original levels
+- Practice checkpoints
+- Gems, unlocks and local progress
+- Android APK workflow
 
-## Play locally
+The original game currently lives at the repository root.
 
-Serve the repository over HTTP and open `index.html`. A static host such as GitHub Pages, Cloudflare Pages, Vercel or Netlify can host it without a backend.
+### ONE MORE SECOND
+Survive a chain of micro-challenges where every decision gets **one second**.
 
-## Android APK
+- Six challenge types at launch
+- Score = seconds survived
+- Instant `ONE MORE?` restart
+- Mobile-first neon interface
+- Local best score and haptics
+- Offline web app
+- Dedicated Android APK build
 
-The workflow `.github/workflows/android-apk.yml` runs on pushes to `main` and can also be started manually from GitHub Actions. It installs Capacitor, creates the Android project, builds a debug APK and uploads it as the `one-more-debug-apk` workflow artifact.
+Source: [`games/one-more-second`](games/one-more-second)
 
-## Design direction
+## ONE MORE identity
 
-ONE MORE is intentionally original. It takes inspiration from the broad one-button precision-platformer genre without copying another game's levels, art, music, code or branding.
+Every game in the series should follow the same core rules:
 
-Visual identity: dark navy/black environments, white geometry, electric-blue motion, orange highlights and rapid feedback.
+1. The main mechanic is understandable almost immediately.
+2. Controls are minimal and mobile-first.
+3. Failure is fast and restart is faster.
+4. Scores are easy to compare and chase.
+5. Difficulty rewards mastery rather than grinding.
+6. The final call-to-action is always **ONE MORE?**
 
-## Next production passes
+## Android downloads
 
-The core game is playable. Production expansion should focus on hand-tuned rhythm level design, original soundtrack, haptics, more obstacle types, cosmetic unlocks, daily challenges, leaderboards, a level editor, accessibility options and signed Play Store release builds.
+GitHub Actions builds installable Android debug APKs. Each game has its own build/release flow so adding future ONE MORE titles does not replace the others.
+
+The existing precision-runner build publishes under `android-latest`. ONE MORE SECOND publishes under `one-more-second-latest`.
