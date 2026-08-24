@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#050912" />
+  <meta name="description" content="ONE MORE — a brutal one-tap rhythm platformer." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>ONE MORE</title>
+</head>
+<body>
+  <main id="app">
+    <canvas id="game" width="390" height="780" aria-label="ONE MORE game"></canvas>
+
+    <section id="menu" class="screen active">
+      <div class="brand"><h1>ONE<br><span>M<span class="hex">O</span>RE</span></h1><p>JUST ONE MORE TRY</p></div>
+      <div class="menu-actions">
+        <button id="playBtn" class="primary">PLAY</button>
+        <button id="practiceBtn">PRACTICE</button>
+        <button id="levelsBtn">LEVELS</button>
+        <button id="soundBtn">SOUND: ON</button>
+      </div>
+      <div class="stats"><span>BEST <b id="bestStat">0%</b></span><span>ATTEMPTS <b id="attemptStat">0</b></span><span>GEMS <b id="gemStat">0</b></span></div>
+    </section>
+
+    <section id="levelScreen" class="screen">
+      <div class="panel">
+        <h2>SELECT LEVEL</h2>
+        <div id="levelGrid" class="level-grid"></div>
+        <button data-back>BACK</button>
+      </div>
+    </section>
+
+    <section id="hud" class="hud hidden">
+      <div><small>ATTEMPT</small><strong id="attemptHud">1</strong></div>
+      <div class="progressWrap"><strong id="progressHud">0%</strong><div class="bar"><i id="progressBar"></i></div></div>
+      <button id="pauseBtn" class="iconBtn" aria-label="Pause">Ⅱ</button>
+    </section>
+
+    <section id="pauseScreen" class="screen">
+      <div class="panel small"><h2>PAUSED</h2><button id="resumeBtn" class="primary">RESUME</button><button id="restartBtn">RESTART</button><button id="menuBtn">MENU</button></div>
+    </section>
+
+    <section id="finishScreen" class="screen">
+      <div class="panel small"><p class="eyebrow">LEVEL COMPLETE</p><h2 id="finishTitle">ONE MORE</h2><p id="finishStats"></p><button id="nextBtn" class="primary">NEXT LEVEL</button><button id="replayBtn">REPLAY</button><button id="finishMenuBtn">MENU</button></div>
+    </section>
+
+    <div id="toast" role="status"></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
