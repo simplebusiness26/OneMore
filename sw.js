@@ -1,5 +1,5 @@
-const CACHE='one-more-v2';
-const ASSETS=['./','index.html','styles.css','game.js','manifest.webmanifest','icons/icon.svg'];
+const CACHE='one-more-v3';
+const ASSETS=['./','index.html','styles.css','game.js','gameplay-patch.js','manifest.webmanifest','icons/icon.svg'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
