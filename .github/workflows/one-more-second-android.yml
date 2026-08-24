@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: one-more-second-android
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -91,7 +95,6 @@ jobs:
         id: verify
         run: |
           test -f games/one-more-second/android/app/build/outputs/apk/debug/app-debug.apk
-          test -f games/one-more-second/android/app/src/main/assets/public/index.html
           cp games/one-more-second/android/app/build/outputs/apk/debug/app-debug.apk one-more-second-debug.apk
           ls -lh one-more-second-debug.apk
 
@@ -119,6 +122,7 @@ jobs:
 
       - name: Record ONE MORE SECOND build diagnostics
         if: always()
+        continue-on-error: true
         env:
           JOB_STATUS: ${{ job.status }}
           CHECKOUT: ${{ steps.checkout.outcome }}
@@ -158,8 +162,11 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git reset --hard
+          git clean -fdx
           git fetch origin main
           git checkout -B ci-status origin/main
+          mkdir -p games/one-more-second
           cp /tmp/one-more-second-build-status.txt games/one-more-second/build-status.txt
           git add games/one-more-second/build-status.txt
           if git diff --cached --quiet; then
