@@ -67,6 +67,14 @@ jobs:
         id: capsync
         run: npx cap sync android
 
+      - name: Install stable debug signing key
+        id: signing
+        run: |
+          mkdir -p "$HOME/.android"
+          base64 --decode .github/one-more-debug.keystore.b64 > "$HOME/.android/debug.keystore"
+          test -s "$HOME/.android/debug.keystore"
+          keytool -list -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey >/dev/null
+
       - name: Build debug APK
         id: gradle
         working-directory: android
@@ -115,6 +123,7 @@ jobs:
           WEB: ${{ steps.web.outcome }}
           CAPADD: ${{ steps.capadd.outcome }}
           CAPSYNC: ${{ steps.capsync.outcome }}
+          SIGNING: ${{ steps.signing.outcome }}
           GRADLE: ${{ steps.gradle.outcome }}
           VERIFY: ${{ steps.verify.outcome }}
           ARTIFACT: ${{ steps.artifact.outcome }}
@@ -134,6 +143,7 @@ jobs:
           prepare_web=$WEB
           capacitor_add_android=$CAPADD
           capacitor_sync=$CAPSYNC
+          stable_debug_signing=$SIGNING
           gradle_build=$GRADLE
           verify_apk=$VERIFY
           upload_artifact=$ARTIFACT
