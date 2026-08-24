@@ -7,8 +7,8 @@ const H = 780;
 const GROUND = 650;
 const PLAYER_X = 95;
 const PLAYER_SIZE = 30;
-const GRAVITY = 1540;
-const JUMP_VELOCITY = -570;
+const GRAVITY = 1800;
+const JUMP_VELOCITY = -690;
 
 let state = 'menu';
 let paused = false;
