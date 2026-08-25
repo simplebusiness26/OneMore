@@ -1,4 +1,4 @@
-const CACHE='one-more-v3';
+const CACHE='one-more-v4';
 const ASSETS=['./','index.html','styles.css','game.js','gameplay-patch.js','manifest.webmanifest','icons/icon.svg'];
 
 self.addEventListener('install',event=>{
