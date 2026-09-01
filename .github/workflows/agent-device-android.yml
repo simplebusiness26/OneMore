@@ -1,0 +1,108 @@
+name: Agent Device Android QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'styles.css'
+      - 'game.js'
+      - 'gameplay-patch.js'
+      - 'manifest.webmanifest'
+      - 'sw.js'
+      - 'icons/**'
+      - 'package.json'
+      - 'capacitor.config.json'
+      - 'tests/agent-device/**'
+      - '.github/workflows/agent-device-android.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'styles.css'
+      - 'game.js'
+      - 'gameplay-patch.js'
+      - 'manifest.webmanifest'
+      - 'sw.js'
+      - 'icons/**'
+      - 'package.json'
+      - 'capacitor.config.json'
+      - 'tests/agent-device/**'
+      - '.github/workflows/agent-device-android.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-device-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Set up Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '22.22.0'
+          cache: npm
+          cache-dependency-path: tests/agent-device/package-lock.json
+
+      - name: Set up Java
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install app dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Agent Device
+        run: npm ci --prefix tests/agent-device --no-audit --no-fund
+
+      - name: Prepare Android app
+        run: |
+          mkdir -p dist/icons
+          cp index.html styles.css game.js gameplay-patch.js manifest.webmanifest sw.js dist/
+          cp icons/icon.svg dist/icons/
+          npx cap add android
+          npx cap sync android
+
+      - name: Build test APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run Agent Device checks
+        uses: reactivecircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b # v2.35.0
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics
+          script: |
+            adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+            tests/agent-device/node_modules/.bin/agent-device --version
+            npm --prefix tests/agent-device run test:android -- --record-video --artifacts-dir "$GITHUB_WORKSPACE/agent-device-results" --reporter default --reporter "junit:$GITHUB_WORKSPACE/agent-device-results/junit.xml"
+
+      - name: Upload screenshots, video, logs and timing
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: one-more-agent-device-evidence
+          path: agent-device-results
+          if-no-files-found: warn
+          retention-days: 14
