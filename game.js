@@ -583,7 +583,7 @@ function buildLevels() {
     const b = document.createElement('button');
     b.className = 'level-card';
     b.disabled = i >= save.unlocked;
-    b.innerHTML = `<b>${String(i + 1).padStart(2, '0')} · ${L.name}</b><small>${i < save.unlocked ? (save.best[i] || 0) + '% BEST · ${L.speed} SPEED' : 'LOCKED'}</small>`;
+    b.innerHTML = `<b>${String(i + 1).padStart(2, '0')} · ${L.name}</b><small>${i < save.unlocked ? `${save.best[i] || 0}% BEST · ${L.speed} SPEED` : 'LOCKED'}</small>`;
     b.onclick = () => start(i, false);
     grid.appendChild(b);
   });
