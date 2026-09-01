@@ -1,0 +1,11 @@
+{
+  "name": "one-more-agent-device-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:android": "agent-device test menu-navigation.ad gameplay-controls.ad --platform android --timeout 120000 --retries 1"
+  },
+  "devDependencies": {
+    "agent-device": "0.20.10"
+  }
+}
