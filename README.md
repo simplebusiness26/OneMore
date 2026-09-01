@@ -6,6 +6,16 @@
 
 This repository now contains only the original **ONE MORE** game and its Android build/release workflow.
 
+## Automated Android gameplay checks
+
+Agent Device runs the game on an Android emulator whenever gameplay, interface, or device-test files change. It verifies that the APK launches, the main menu and level selector work, gameplay starts, and pause, resume, restart, jump input, and return-to-menu controls remain operable.
+
+Every run uploads review evidence containing screenshots, video, replay timing, logs, and a JUnit report. The checks run remotely in GitHub Actions, so no local Android development machine is required.
+
+- Workflow: `Agent Device Android QA`
+- Replay scripts: `tests/agent-device/`
+- Evidence artifact: `one-more-agent-device-evidence`
+
 ## ONE MORE series
 
 Each additional game has its own dedicated repository:
