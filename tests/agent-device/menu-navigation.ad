@@ -1,0 +1,18 @@
+context platform=android kind=emulator timeout=90000 retries=1
+
+env APP_TARGET="com.simplebusiness26.onemore"
+
+open "${APP_TARGET}" --relaunch
+wait "PLAY" 30000
+wait "label=\"ONE MORE game\"" 5000
+screenshot "${AD_ARTIFACTS}/01-main-menu.png"
+
+click "label=\"LEVELS\""
+wait "SELECT LEVEL" 5000
+wait "FIRST LIGHT" 5000
+screenshot "${AD_ARTIFACTS}/02-level-selection.png"
+
+click "label=\"BACK\""
+wait "PLAY" 5000
+screenshot "${AD_ARTIFACTS}/03-main-menu-return.png"
+close
