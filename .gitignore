@@ -1,0 +1,5 @@
+node_modules/
+android/
+dist/
+.agent-device/
+agent-device-results/
