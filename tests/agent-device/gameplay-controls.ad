@@ -1,0 +1,31 @@
+context platform=android kind=emulator timeout=90000 retries=1
+
+env APP_TARGET="com.simplebusiness26.onemore"
+
+open "${APP_TARGET}" --relaunch
+wait "PLAY" 30000
+click "label=\"PLAY\""
+wait "ATTEMPT" 5000
+screenshot "${AD_ARTIFACTS}/01-game-running.png"
+
+click "label=\"Pause\""
+wait "PAUSED" 5000
+wait "RESUME" 5000
+screenshot "${AD_ARTIFACTS}/02-game-paused.png"
+
+click "label=\"RESUME\""
+wait "ATTEMPT" 5000
+press 540 1200 --hold-ms 350
+screenshot "${AD_ARTIFACTS}/03-jump-input.png"
+
+click "label=\"Pause\""
+wait "PAUSED" 5000
+click "label=\"RESTART\""
+wait "ATTEMPT" 5000
+
+click "label=\"Pause\""
+wait "PAUSED" 5000
+click "label=\"MENU\""
+wait "PLAY" 5000
+screenshot "${AD_ARTIFACTS}/04-returned-to-menu.png"
+close
