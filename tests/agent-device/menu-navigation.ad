@@ -10,9 +10,10 @@ screenshot "${AD_ARTIFACTS}/01-main-menu.png"
 click "label=\"LEVELS\""
 wait "SELECT LEVEL" 5000
 wait "FIRST LIGHT" 5000
+wait "300 SPEED" 5000
 screenshot "${AD_ARTIFACTS}/02-level-selection.png"
 
-click "label=\"BACK\""
+click "role=button label=\"BACK\""
 wait "PLAY" 5000
 screenshot "${AD_ARTIFACTS}/03-main-menu-return.png"
 close
