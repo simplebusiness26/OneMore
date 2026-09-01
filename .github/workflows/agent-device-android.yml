@@ -96,11 +96,7 @@ jobs:
           script: |
             adb install -r android/app/build/outputs/apk/debug/app-debug.apk
             tests/agent-device/node_modules/.bin/agent-device --version
-            npm --prefix tests/agent-device run test:android -- \
-              --record-video \
-              --artifacts-dir "$GITHUB_WORKSPACE/agent-device-results" \
-              --reporter default \
-              --reporter "junit:$GITHUB_WORKSPACE/agent-device-results/junit.xml"
+            npm --prefix tests/agent-device run test:android -- --record-video --artifacts-dir "$GITHUB_WORKSPACE/agent-device-results" --reporter default --reporter "junit:$GITHUB_WORKSPACE/agent-device-results/junit.xml"
 
       - name: Upload screenshots, video, logs and timing
         if: always()
